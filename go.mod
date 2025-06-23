@@ -1,3 +1,3 @@
-module go-yt-pl-001
+module github.com/meesooqa/go-ytpl-custom-sort
 
 go 1.24.1
