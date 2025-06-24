@@ -6,6 +6,10 @@ run:
 lint:
 	golangci-lint run ./...
 
+.PHONY: vet
+lint:
+	go vet ./...
+
 .PHONY: test_race
 test_race:
 	go test -race -timeout=60s -count 1 ./...
