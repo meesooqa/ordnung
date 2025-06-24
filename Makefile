@@ -7,7 +7,7 @@ lint:
 	golangci-lint run ./...
 
 .PHONY: vet
-lint:
+vet:
 	go vet ./...
 
 .PHONY: test_race
