@@ -1,4 +1,4 @@
-package yt
+package tools
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func parseYtDuration(durationStr string) (time.Duration, error) {
+func ParseYtDuration(durationStr string) (time.Duration, error) {
 	if !strings.HasPrefix(durationStr, "PT") {
 		return 0, fmt.Errorf("invalid duration format, missing PT prefix")
 	}

@@ -1,4 +1,4 @@
-package yt
+package tools
 
 import (
 	"testing"
@@ -66,7 +66,7 @@ func TestParseYtDuration(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := parseYtDuration(tt.input)
+			got, err := ParseYtDuration(tt.input)
 
 			if tt.wantErr {
 				assert.Error(t, err, "expected error for input %s", tt.input)
