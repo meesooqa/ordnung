@@ -67,7 +67,9 @@ func (yt *Service) CopyAndSortPlaylist(id, sortBy string, remove bool) error {
 		log.Printf("[INFO] added %s to playlist %s", v.ID(), plTo.Id)
 		if remove {
 			err := yt.pl.RemoveItem(plFrom.Id, v.ID())
-			log.Printf("[ERROR] error removing %s from playlist %s: %v", v.ID(), plFrom.Id, err)
+			if err != nil {
+				log.Printf("[ERROR] error removing %s from playlist %s: %v", v.ID(), plFrom.Id, err)
+			}
 		}
 	}
 
