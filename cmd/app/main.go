@@ -20,8 +20,9 @@ import (
 )
 
 var (
-	sort = flag.String("sort", fields.DURATION, "Sort By")
-	pls  = flag.String("pls", "", "Playlist ID from URL")
+	sort   = flag.String("sort", fields.DURATION, "Sort By")
+	pls    = flag.String("pls", "", "Playlist ID from URL")
+	remove = flag.Bool("remove", false, "Remove items from playlist")
 )
 
 func main() {
@@ -37,14 +38,14 @@ func main() {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 
-	log.Printf("sortBy %s, playlistID %s", *sort, *pls)
-	err = run(*pls, *sort)
+	log.Printf("sortBy %s, playlistID %s, remove %t", *sort, *pls, *remove)
+	err = run(*pls, *sort, *remove)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func run(playlistID, sortBy string) error {
+func run(playlistID, sortBy string, remove bool) error {
 	ctx := context.Background()
 	client := getClient(ctx)
 	service, err := youtube.NewService(ctx, option.WithHTTPClient(client))
@@ -57,7 +58,7 @@ func run(playlistID, sortBy string) error {
 	}
 	ytService := yt.NewService(service, ff, adapter.NewAdapter(ff))
 
-	err = ytService.CopyAndSortPlaylist(playlistID, sortBy)
+	err = ytService.CopyAndSortPlaylist(playlistID, sortBy, remove)
 	if err != nil {
 		return fmt.Errorf("unable to copy playlist videos: %v", err)
 	}

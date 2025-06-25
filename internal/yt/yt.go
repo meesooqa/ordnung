@@ -32,7 +32,7 @@ func NewService(s *youtube.Service, ff map[string]fields.Field, adapter adapter.
 }
 
 // CopyAndSortPlaylist copies a playlist and sorts its videos by the specified field
-func (yt *Service) CopyAndSortPlaylist(id, sortBy string) error {
+func (yt *Service) CopyAndSortPlaylist(id, sortBy string, remove bool) error {
 	// sort
 	field, ok := yt.ff[sortBy]
 	if !ok {
@@ -61,11 +61,14 @@ func (yt *Service) CopyAndSortPlaylist(id, sortBy string) error {
 	}
 
 	for idx, v := range videos {
-		if err = yt.pl.AddItem(plTo.Id, v.ID(), int64(idx)); err != nil {
+		if err := yt.pl.AddItem(plTo.Id, v.ID(), int64(idx)); err != nil {
 			return fmt.Errorf("unable to add %s: %v", v.ID(), err)
 		}
 		log.Printf("[INFO] added %s to playlist %s", v.ID(), plTo.Id)
-		// _ = yt.pl.RemoveItem(plFrom.Id, v.ID())
+		if remove {
+			err := yt.pl.RemoveItem(plFrom.Id, v.ID())
+			log.Printf("[ERROR] error removing %s from playlist %s: %v", v.ID(), plFrom.Id, err)
+		}
 	}
 
 	return nil

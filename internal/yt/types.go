@@ -4,7 +4,7 @@ import "google.golang.org/api/youtube/v3"
 
 // Yt is an interface for interacting with YouTube data
 type Yt interface {
-	CopyAndSortPlaylist(id, sortBy string) error
+	CopyAndSortPlaylist(id, sortBy string, remove bool) error
 }
 
 // Playlist is an interface for interacting with YouTube playlists

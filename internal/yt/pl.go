@@ -104,21 +104,21 @@ func (p *Pl) AddItem(id, videoID string, position int64) error {
 func (p *Pl) RemoveItem(id, videoID string) error {
 	var nextPageToken string
 	for {
-		call := p.s.PlaylistItems.List([]string{"id", "snippet"}).
+		r := p.s.PlaylistItems.List([]string{"id", "snippet"}).
 			PlaylistId(id).
-			MaxResults(100)
+			MaxResults(200)
 		if nextPageToken != "" {
-			call = call.PageToken(nextPageToken)
+			r = r.PageToken(nextPageToken)
 		}
-		resp, err := call.Do()
+		resp, err := r.Do()
 		if err != nil {
-			return fmt.Errorf("не удалось получить элементы плейлиста: %v", err)
+			return fmt.Errorf("unable to get items to remove: %v", err)
 		}
 
 		for _, item := range resp.Items {
 			if item.Snippet.ResourceId.VideoId == videoID {
 				if err := p.s.PlaylistItems.Delete(item.Id).Do(); err != nil {
-					return fmt.Errorf("не удалось удалить элемент %s: %v", item.Id, err)
+					return fmt.Errorf("unable to remove item %s: %v", item.Id, err)
 				}
 				return nil
 			}

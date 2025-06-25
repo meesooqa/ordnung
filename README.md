@@ -45,6 +45,13 @@ make build
 ./build/ordnung -pls=PLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
+Or
+
+```shell
+./build/ordnung -remove -pls=PLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+to clear playlist pls.
+
 ### Sort
 
 By default the app sorts by `duration`.
