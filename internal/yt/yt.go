@@ -11,14 +11,16 @@ import (
 	"github.com/meesooqa/go-ytpl-custom-sort/internal/video"
 )
 
+// Service is a struct that implements the Yt interface for managing YouTube playlists
 type Service struct {
 	s       *youtube.Service
 	ff      map[string]fields.Field
 	adapter adapter.YtAdapter
 
-	pl YtPl
+	pl Playlist
 }
 
+// NewService creates a new instance of Service with the provided YouTube service, fields, and adapter
 func NewService(s *youtube.Service, ff map[string]fields.Field, adapter adapter.YtAdapter) Yt {
 	return &Service{
 		s:       s,
@@ -29,6 +31,7 @@ func NewService(s *youtube.Service, ff map[string]fields.Field, adapter adapter.
 	}
 }
 
+// CopyAndSortPlaylist copies a playlist and sorts its videos by the specified field
 func (yt *Service) CopyAndSortPlaylist(id, sortBy string) error {
 	// sort
 	field, ok := yt.ff[sortBy]
@@ -64,7 +67,7 @@ func (yt *Service) CopyAndSortPlaylist(id, sortBy string) error {
 }
 
 func (yt *Service) playlistVideo(playlistID string) ([]video.YtVideo, error) {
-	ids, err := yt.pl.ItemsId(playlistID)
+	ids, err := yt.pl.ItemsID(playlistID)
 	if err != nil {
 		return nil, err
 	}

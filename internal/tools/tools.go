@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// ParseYtDuration parses a YouTube duration string in the format "PT#H#M#S"
 func ParseYtDuration(durationStr string) (time.Duration, error) {
 	if !strings.HasPrefix(durationStr, "PT") {
 		return 0, fmt.Errorf("invalid duration format, missing PT prefix")

@@ -10,18 +10,21 @@ import (
 	"github.com/meesooqa/go-ytpl-custom-sort/internal/video"
 )
 
+// Adapter implements the YtAdapter interface
 type Adapter struct {
 	ff map[string]fields.Field
 }
 
+// NewAdapter creates a new Adapter instance with the provided field mappings
 func NewAdapter(ff map[string]fields.Field) YtAdapter {
 	return &Adapter{
 		ff: ff,
 	}
 }
 
+// ConvertItems converts a slice of YouTube Video items to a slice of custom video.YtVideo types
 func (a *Adapter) ConvertItems(items []*youtube.Video) ([]video.YtVideo, error) {
-	var result []video.YtVideo
+	result := make([]video.YtVideo, len(items))
 	for _, item := range items {
 		videoItem, err := a.convert(item)
 		if err != nil {
@@ -44,6 +47,7 @@ func (a *Adapter) convert(item *youtube.Video) (video.YtVideo, error) {
 	), nil
 }
 
+// convertField is a generic function to convert a field from a YouTube Video item
 func convertField[T any](a *Adapter, code string, item *youtube.Video) (T, error) {
 	var zero T
 	f, ok := a.ff[code]

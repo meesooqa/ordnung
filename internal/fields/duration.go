@@ -10,14 +10,18 @@ import (
 	"github.com/meesooqa/go-ytpl-custom-sort/internal/video"
 )
 
+// DURATION is the name of the duration field used for sorting YouTube videos
 const DURATION = "duration"
 
+// Duration represents a field for sorting YouTube videos by their duration.
 type Duration struct{}
 
+// NewDuration creates a new Duration field instance
 func NewDuration() Field {
 	return &Duration{}
 }
 
+// Value extracts the duration value from a YouTube video
 func (Duration) Value(v *youtube.Video) (any, error) {
 	value, err := tools.ParseYtDuration(v.ContentDetails.Duration)
 	if err != nil {
@@ -26,6 +30,7 @@ func (Duration) Value(v *youtube.Video) (any, error) {
 	return value, nil
 }
 
+// Sort sorts a slice of YouTube videos by their duration
 func (Duration) Sort(items []video.YtVideo) {
 	slices.SortFunc(items, func(a, b video.YtVideo) int {
 		aDur := a.Duration()

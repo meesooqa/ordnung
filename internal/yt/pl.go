@@ -6,16 +6,19 @@ import (
 	"google.golang.org/api/youtube/v3"
 )
 
+// Pl is a struct that implements the Playlist interface for managing YouTube playlists
 type Pl struct {
 	s *youtube.Service
 }
 
-func NewPl(s *youtube.Service) YtPl {
+// NewPl creates a new instance of Pl with the provided YouTube service
+func NewPl(s *youtube.Service) Playlist {
 	return &Pl{
 		s: s,
 	}
 }
 
+// FindByID retrieves a playlist by its ID
 func (p *Pl) FindByID(id string) (*youtube.Playlist, error) {
 	r, err := p.s.Playlists.List([]string{"snippet"}).
 		Id(id).
@@ -29,7 +32,8 @@ func (p *Pl) FindByID(id string) (*youtube.Playlist, error) {
 	return r.Items[0], nil
 }
 
-func (p *Pl) ItemsId(id string) ([]string, error) {
+// ItemsID retrieves the video IDs of all items in a playlist
+func (p *Pl) ItemsID(id string) ([]string, error) {
 	r, err := p.s.PlaylistItems.List([]string{"contentDetails"}).
 		PlaylistId(id).
 		Do()
@@ -37,13 +41,14 @@ func (p *Pl) ItemsId(id string) ([]string, error) {
 		return nil, fmt.Errorf("unable to get playlist items: %v", err)
 	}
 
-	var result []string
+	result := make([]string, len(r.Items))
 	for _, item := range r.Items {
 		result = append(result, item.ContentDetails.VideoId)
 	}
 	return result, nil
 }
 
+// FindByTitle searches for a playlist by its title
 func (p *Pl) FindByTitle(title string) (*youtube.Playlist, error) {
 	r, err := p.s.Playlists.List([]string{"snippet"}).
 		Mine(true).
@@ -60,6 +65,7 @@ func (p *Pl) FindByTitle(title string) (*youtube.Playlist, error) {
 	return nil, nil
 }
 
+// Create creates a new playlist with the specified title
 func (p *Pl) Create(title string) (*youtube.Playlist, error) {
 	newPl := &youtube.Playlist{
 		Snippet: &youtube.PlaylistSnippet{
@@ -77,6 +83,7 @@ func (p *Pl) Create(title string) (*youtube.Playlist, error) {
 	return item, nil
 }
 
+// AddItem adds a video to the specified playlist at the given position
 func (p *Pl) AddItem(id, videoID string, position int64) error {
 	item := &youtube.PlaylistItem{
 		Snippet: &youtube.PlaylistItemSnippet{
@@ -93,6 +100,7 @@ func (p *Pl) AddItem(id, videoID string, position int64) error {
 	return err
 }
 
+// RemoveItem removes a video from the specified playlist by video ID
 func (p *Pl) RemoveItem(id, videoID string) error {
 	var nextPageToken string
 	for {

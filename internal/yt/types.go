@@ -7,10 +7,11 @@ type Yt interface {
 	CopyAndSortPlaylist(id, sortBy string) error
 }
 
-type YtPl interface {
+// Playlist is an interface for interacting with YouTube playlists
+type Playlist interface {
 	FindByID(id string) (*youtube.Playlist, error)
 
-	ItemsId(id string) ([]string, error)
+	ItemsID(id string) ([]string, error)
 
 	FindByTitle(title string) (*youtube.Playlist, error)
 

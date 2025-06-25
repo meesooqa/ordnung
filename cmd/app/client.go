@@ -1,3 +1,4 @@
+// nolint
 package main
 
 import (
@@ -15,30 +16,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/joho/godotenv"
 	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
-	"google.golang.org/api/youtube/v3"
 )
-
-func getClient(ctx context.Context) *http.Client {
-	godotenv.Load()
-	clientID := os.Getenv("CLIENT_ID")
-	secret := os.Getenv("SECRET")
-	config := &oauth2.Config{
-		ClientID:     clientID,
-		ClientSecret: secret,
-		Endpoint:     google.Endpoint,
-		Scopes: []string{
-			youtube.YoutubeScope,
-			youtube.YoutubeReadonlyScope,
-			"openid",
-			"email",
-			"profile",
-		},
-	}
-	return newOAuthClient(ctx, config)
-}
 
 func saveToken(file string, token *oauth2.Token) {
 	f, err := os.Create(file)
