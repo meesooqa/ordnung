@@ -14,6 +14,10 @@ func NewVideo(youtubeVideoID string, duration time.Duration) *Video {
 	}
 }
 
+func (v *Video) ID() string {
+	return v.youtubeVideoID
+}
+
 func (v *Video) Duration() time.Duration {
 	return v.duration
 }

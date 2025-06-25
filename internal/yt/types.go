@@ -1,8 +1,22 @@
 package yt
 
-import "github.com/meesooqa/go-ytpl-custom-sort/internal/video"
+import "google.golang.org/api/youtube/v3"
 
 // Yt is an interface for interacting with YouTube data
 type Yt interface {
-	PlaylistVideo(id string) ([]video.YtVideo, error)
+	CopyAndSortPlaylist(id, sortBy string) error
+}
+
+type YtPl interface {
+	FindByID(id string) (*youtube.Playlist, error)
+
+	ItemsId(id string) ([]string, error)
+
+	FindByTitle(title string) (*youtube.Playlist, error)
+
+	Create(title string) (*youtube.Playlist, error)
+
+	AddItem(id, videoID string, position int64) error
+
+	RemoveItem(id, videoID string) error
 }

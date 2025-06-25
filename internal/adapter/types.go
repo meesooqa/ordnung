@@ -7,6 +7,5 @@ import (
 )
 
 type YtAdapter interface {
-	Convert(*youtube.Video) (video.YtVideo, error)
 	ConvertItems([]*youtube.Video) ([]video.YtVideo, error)
 }

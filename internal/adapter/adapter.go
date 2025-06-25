@@ -23,7 +23,7 @@ func NewAdapter(ff map[string]fields.Field) YtAdapter {
 func (a *Adapter) ConvertItems(items []*youtube.Video) ([]video.YtVideo, error) {
 	var result []video.YtVideo
 	for _, item := range items {
-		videoItem, err := a.Convert(item)
+		videoItem, err := a.convert(item)
 		if err != nil {
 			return nil, err
 		}
@@ -32,7 +32,7 @@ func (a *Adapter) ConvertItems(items []*youtube.Video) ([]video.YtVideo, error) 
 	return result, nil
 }
 
-func (a *Adapter) Convert(item *youtube.Video) (video.YtVideo, error) {
+func (a *Adapter) convert(item *youtube.Video) (video.YtVideo, error) {
 	duration, err := convertField[time.Duration](a, fields.DURATION, item)
 	if err != nil {
 		return nil, err
