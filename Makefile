@@ -18,3 +18,10 @@ test_race:
 test:
 	go clean -testcache
 	go test ./...
+
+.PHONY: build
+build:
+	go build -o ./build/ordnung ./cmd/app/main.go
+	cp .env build/
+	mkdir -p build/var
+	cp -r var/cache build/var/
