@@ -1,5 +1,5 @@
 // nolint
-package main
+package yt
 
 import (
 	"context"
@@ -29,7 +29,7 @@ func saveToken(file string, token *oauth2.Token) {
 	gob.NewEncoder(f).Encode(token)
 }
 
-func newOAuthClient(ctx context.Context, config *oauth2.Config) *http.Client {
+func NewOAuthClient(ctx context.Context, config *oauth2.Config) *http.Client {
 	cacheFile := tokenCacheFile(config)
 	token, err := tokenFromFile(cacheFile)
 	if err != nil {
@@ -50,7 +50,7 @@ func tokenCacheFile(config *oauth2.Config) string {
 	hash.Write([]byte(config.ClientSecret))
 	hash.Write([]byte(strings.Join(config.Scopes, " ")))
 
-	fn := fmt.Sprintf("go-ytpl-custom-sort-tok%v", hash.Sum32())
+	fn := fmt.Sprintf("ordnung-tok%v", hash.Sum32())
 
 	return filepath.Join(cacheDir, url.QueryEscape(fn))
 }

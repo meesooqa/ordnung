@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -18,16 +19,26 @@ import (
 	"github.com/meesooqa/go-ytpl-custom-sort/internal/yt"
 )
 
+var (
+	sort = flag.String("sort", fields.DURATION, "Sort By")
+	pls  = flag.String("pls", "", "Playlist ID from URL")
+)
+
 func main() {
-	sortBy := "duration"
-	playlistID := "PLufCON52KijtaZCLAdC9hf7ykxMGjl6mT" // Test [Public]
+	flag.Parse()
+	if *pls == "" {
+		fmt.Println("[ERROR] `-pls`")
+		flag.Usage()
+		os.Exit(1)
+	}
 
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 
-	err = run(playlistID, sortBy)
+	log.Printf("sortBy %s, playlistID %s", *sort, *pls)
+	err = run(*pls, *sort)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -65,5 +76,5 @@ func getClient(ctx context.Context) *http.Client {
 			youtube.YoutubeReadonlyScope,
 		},
 	}
-	return newOAuthClient(ctx, config)
+	return yt.NewOAuthClient(ctx, config)
 }
