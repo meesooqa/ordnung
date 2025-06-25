@@ -25,12 +25,12 @@ func NewAdapter(ff map[string]fields.Field) YtAdapter {
 // ConvertItems converts a slice of YouTube Video items to a slice of custom video.YtVideo types
 func (a *Adapter) ConvertItems(items []*youtube.Video) ([]video.YtVideo, error) {
 	result := make([]video.YtVideo, len(items))
-	for _, item := range items {
+	for i, item := range items {
 		videoItem, err := a.convert(item)
 		if err != nil {
 			return nil, err
 		}
-		result = append(result, videoItem)
+		result[i] = videoItem
 	}
 	return result, nil
 }
