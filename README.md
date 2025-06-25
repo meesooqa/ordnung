@@ -3,7 +3,7 @@
 
 The application sorts video in the YouTube playlist.
 It creates a new playlist based on the existing
-and sorts video by a certain criterion (by default - by duration).
+and sorts video by a certain criterion (by `duration` by default).
 For work, authorization is required through Google API (YouTube Data API V3).
 
 ### Requirements
@@ -30,9 +30,6 @@ For work, authorization is required through Google API (YouTube Data API V3).
 
 ```shell
 git clone https://github.com/meesooqa/ordnung
-```
-
-```shell
 cd ordnung
 ```
 
