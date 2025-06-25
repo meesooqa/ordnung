@@ -6,8 +6,8 @@ import (
 
 	"google.golang.org/api/youtube/v3"
 
-	"github.com/meesooqa/go-ytpl-custom-sort/internal/tools"
-	"github.com/meesooqa/go-ytpl-custom-sort/internal/video"
+	"github.com/meesooqa/ordnung/internal/tools"
+	"github.com/meesooqa/ordnung/internal/video"
 )
 
 // DURATION is the name of the duration field used for sorting YouTube videos

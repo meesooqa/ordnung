@@ -14,9 +14,9 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/youtube/v3"
 
-	"github.com/meesooqa/go-ytpl-custom-sort/internal/adapter"
-	"github.com/meesooqa/go-ytpl-custom-sort/internal/fields"
-	"github.com/meesooqa/go-ytpl-custom-sort/internal/yt"
+	"github.com/meesooqa/ordnung/internal/adapter"
+	"github.com/meesooqa/ordnung/internal/fields"
+	"github.com/meesooqa/ordnung/internal/yt"
 )
 
 var (

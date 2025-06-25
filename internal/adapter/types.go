@@ -3,7 +3,7 @@ package adapter
 import (
 	"google.golang.org/api/youtube/v3"
 
-	"github.com/meesooqa/go-ytpl-custom-sort/internal/video"
+	"github.com/meesooqa/ordnung/internal/video"
 )
 
 // YtAdapter defines the interface for converting YouTube video items to a custom video type

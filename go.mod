@@ -1,4 +1,4 @@
-module github.com/meesooqa/go-ytpl-custom-sort
+module github.com/meesooqa/ordnung
 
 go 1.24.1
 

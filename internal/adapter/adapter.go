@@ -6,8 +6,8 @@ import (
 
 	"google.golang.org/api/youtube/v3"
 
-	"github.com/meesooqa/go-ytpl-custom-sort/internal/fields"
-	"github.com/meesooqa/go-ytpl-custom-sort/internal/video"
+	"github.com/meesooqa/ordnung/internal/fields"
+	"github.com/meesooqa/ordnung/internal/video"
 )
 
 // Adapter implements the YtAdapter interface
