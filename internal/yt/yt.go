@@ -42,6 +42,11 @@ func (yt *Service) CopyAndSortPlaylist(id, sortBy string) error {
 	if err != nil {
 		return fmt.Errorf("unable to get playlist videos: %v", err)
 	}
+	if len(videos) == 0 {
+		log.Println("[INFO] no videos found")
+		return nil
+	}
+	log.Printf("[DEBUG] videos len %d", len(videos))
 	field.Sort(videos)
 
 	// copy
@@ -60,7 +65,7 @@ func (yt *Service) CopyAndSortPlaylist(id, sortBy string) error {
 			return fmt.Errorf("unable to add %s: %v", v.ID(), err)
 		}
 		log.Printf("[INFO] added %s to playlist %s", v.ID(), plTo.Id)
-		_ = yt.pl.RemoveItem(plFrom.Id, v.ID())
+		// _ = yt.pl.RemoveItem(plFrom.Id, v.ID())
 	}
 
 	return nil
@@ -74,6 +79,7 @@ func (yt *Service) playlistVideo(playlistID string) ([]video.YtVideo, error) {
 
 	r, err := yt.s.Videos.List([]string{"contentDetails", "snippet", "statistics", "status"}).
 		Id(ids...).
+		MaxResults(100).
 		Do()
 	if err != nil {
 		return nil, fmt.Errorf("unable to get video by ids: %v", err)

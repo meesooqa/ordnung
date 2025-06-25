@@ -32,6 +32,10 @@ func (Duration) Value(v *youtube.Video) (any, error) {
 
 // Sort sorts a slice of YouTube videos by their duration
 func (Duration) Sort(items []video.YtVideo) {
+	if len(items) == 0 {
+		return
+	}
+
 	slices.SortFunc(items, func(a, b video.YtVideo) int {
 		aDur := a.Duration()
 		bDur := b.Duration()
