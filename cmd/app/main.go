@@ -73,7 +73,6 @@ func getClient(ctx context.Context) *http.Client {
 		Endpoint:     google.Endpoint,
 		Scopes: []string{
 			youtube.YoutubeScope,
-			youtube.YoutubeReadonlyScope,
 		},
 	}
 	return yt.NewOAuthClient(ctx, config)
