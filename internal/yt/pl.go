@@ -36,14 +36,15 @@ func (p *Pl) FindByID(id string) (*youtube.Playlist, error) {
 func (p *Pl) ItemsID(id string) ([]string, error) {
 	r, err := p.s.PlaylistItems.List([]string{"contentDetails"}).
 		PlaylistId(id).
+		MaxResults(100).
 		Do()
 	if err != nil {
 		return nil, fmt.Errorf("unable to get playlist items: %v", err)
 	}
 
 	result := make([]string, len(r.Items))
-	for _, item := range r.Items {
-		result = append(result, item.ContentDetails.VideoId)
+	for i, item := range r.Items {
+		result[i] = item.ContentDetails.VideoId
 	}
 	return result, nil
 }
